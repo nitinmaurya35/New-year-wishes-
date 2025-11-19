@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy New Year 2026 ”9½5</title>
+    <title>Happy New Year 2026 ðŸŽ‰</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -182,12 +182,12 @@
         <img src="happy_new_year_2026_fireworks.gif" alt="Happy New Year 2026 Animation">
 
         <div id="nameInputSection">
-            <input type="text" id="userName" placeholder="1Ñ51Ò51Ó01Ì9 1Í31Ñ01Ð81Ó0 1Ð81Ó01Ñ4 1Ñ81Ó11Ï01Ó91Í0">
-            <button id="generateBtn" onclick="generateLink()" class="btn">1Ñ81Ó11Í01Î9 1Ñ21Ð81Ó01Î31Ì9</button>
+            <input type="text" id="userName" placeholder="à¤¯à¤¹à¤¾à¤ à¤…à¤ªà¤¨à¤¾ à¤¨à¤¾à¤® à¤²à¤¿à¤–à¥‡à¤‚">
+            <button id="generateBtn" onclick="generateLink()" class="btn">à¤²à¤¿à¤‚à¤• à¤¬à¤¨à¤¾à¤à¤</button>
         </div>
 
         <a id="whatsappShareBtn" href="#" target="_blank" class="btn">
-            <i class="fab fa-whatsapp"></i> 1Ñ81Ó11Í01Î9 WhatsApp 1Ñ01Ñ6 1Ò21Ó91Ñ51Ñ6 1Î91Ñ61Ó91Í0
+            <i class="fab fa-whatsapp"></i> à¤²à¤¿à¤‚à¤• WhatsApp à¤ªà¤° à¤¶à¥‡à¤¯à¤° à¤•à¤°à¥‡à¤‚
         </a>
 
         <div id="linkOutput" class="link-box"></div>
@@ -208,14 +208,14 @@
                 // When someone clicks a shared link
                 const decodedSenderName = decodeURIComponent(senderName);
                 greetingText.innerHTML = `Happy New Year 2026!`;
-                senderNameDisplay.innerHTML = `From ${decodedSenderName}! ”9½5`;
+                senderNameDisplay.innerHTML = `From ${decodedSenderName}! ðŸŽ‰`;
                 senderNameDisplay.style.display = 'block';
                 // Hide input field and show a friendly message instead
                 document.getElementById('nameInputSection').style.display = 'none';
                 
                 // Show a simple input for them to generate their own link
                 document.getElementById('nameInputSection').style.display = 'block';
-                document.getElementById('userName').placeholder = '1Í31Ñ01Ð81Ó0 1Ð81Ó01Ñ4 1Ñ81Ó11Ï01Ó91Í0 1Î81Ñ6 1Í41Ï11Ó9 1Ò21Ó91Ñ51Ñ6 1Î91Ñ61Ó91Í0';
+                document.getElementById('userName').placeholder = 'à¤…à¤ªà¤¨à¤¾ à¤¨à¤¾à¤® à¤²à¤¿à¤–à¥‡à¤‚ à¤”à¤° à¤†à¤—à¥‡ à¤¶à¥‡à¤¯à¤° à¤•à¤°à¥‡à¤‚';
                 
                 triggerConfetti(); 
             } else {
@@ -232,7 +232,7 @@
             const whatsappBtn = document.getElementById('whatsappShareBtn');
 
             if (userName === "") {
-                alert("1Î91Ó51Ñ01Ñ51Ó0 1Ñ01Ò51Ñ81Ó9 1Í31Ñ01Ð81Ó0 1Ð81Ó01Ñ4 1Ñ81Ó11Ï01Ó91Í01Ö8");
+                alert("à¤•à¥ƒà¤ªà¤¯à¤¾ à¤ªà¤¹à¤²à¥‡ à¤…à¤ªà¤¨à¤¾ à¤¨à¤¾à¤® à¤²à¤¿à¤–à¥‡à¤‚à¥¤");
                 return;
             }
 
@@ -242,8 +242,8 @@
             shareableLink = `${baseUrl}?from=${encodedName}`;
 
             // 2. Prepare WhatsApp Share
-            const message = encodeURIComponent(`1Í41Ñ01Î91Ô3 1Î81Ñ6 1Í41Ñ01Î91Ó9 1Ñ01Ñ61Ó11Ò11Ó01Ñ6 1Î91Ô3 Happy New Year 2026 1Î91Ó2 1Ð21Ó91Ñ6 1Ò41Ó01Ñ61Ó2 1Ò21Ó31Ñ31Î91Ó01Ñ41Ð81Ó01Î31Ì9! 1Ñ51Ò5 1Ò11Ó11Ò21Ó11Í01Ï1 1Î91Ó01Ñ61Ô51Ð1 ${userName} 1Î91Ó2 1Ð41Ñ61Ñ1 1Ò41Ó9 1Í41Ñ51Ó0 1Ò51Ô01Ö8
-            \n1Í41Ñ0 1Ñ31Ó2 1Í31Ñ01Ð81Ó0 1Ò11Ó11Ò21Ó11Í01Ï1 1Î91Ó01Ñ61Ô51Ð1 1Ñ51Ò51Ó01Ì9 1Ò41Ó9 1Ï61Ð81Ñ61Ó91Ï9 1Î91Ñ61Ó91Í0: ${shareableLink}`);
+            const message = encodeURIComponent(`à¤†à¤ªà¤•à¥‹ à¤”à¤° à¤†à¤ªà¤•à¥‡ à¤ªà¤°à¤¿à¤µà¤¾à¤° à¤•à¥‹ Happy New Year 2026 à¤•à¥€ à¤¢à¥‡à¤° à¤¸à¤¾à¤°à¥€ à¤¶à¥à¤­à¤•à¤¾à¤®à¤¨à¤¾à¤à¤! à¤¯à¤¹ à¤µà¤¿à¤¶à¤¿à¤‚à¤— à¤•à¤¾à¤°à¥à¤¡ ${userName} à¤•à¥€ à¤¤à¤°à¤« à¤¸à¥‡ à¤†à¤¯à¤¾ à¤¹à¥ˆà¥¤
+            \nà¤†à¤ª à¤­à¥€ à¤…à¤ªà¤¨à¤¾ à¤µà¤¿à¤¶à¤¿à¤‚à¤— à¤•à¤¾à¤°à¥à¤¡ à¤¯à¤¹à¤¾à¤ à¤¸à¥‡ à¤œà¤¨à¤°à¥‡à¤Ÿ à¤•à¤°à¥‡à¤‚: ${shareableLink}`);
             
             // For Mobile (WhatsApp App)
             const whatsappUrl = `whatsapp://send?text=${message}`;
@@ -256,7 +256,7 @@
             whatsappBtn.href = whatsappUrl;
             whatsappBtn.style.display = 'inline-flex'; // Show the WhatsApp Button
 
-            linkOutput.innerHTML = `1Ñ81Ó11Í01Î9 1Ñ21Ð8 1Ï11Ñ51Ó0 1Ò51Ô0, 1Í31Ñ2 WhatsApp 1Ñ01Ñ6 1Ò21Ó91Ñ51Ñ6 1Î91Ñ61Ó91Í0! 1Ñ51Ó0 1Í51Ò41Ó9 1Î91Ô11Ñ01Ó2 1Î91Ñ61Ó91Í0: <br><a href="${shareableLink}" target="_blank">${shareableLink}</a>`;
+            linkOutput.innerHTML = `à¤²à¤¿à¤‚à¤• à¤¬à¤¨ à¤—à¤¯à¤¾ à¤¹à¥ˆ, à¤…à¤¬ WhatsApp à¤ªà¤° à¤¶à¥‡à¤¯à¤° à¤•à¤°à¥‡à¤‚! à¤¯à¤¾ à¤‡à¤¸à¥‡ à¤•à¥‰à¤ªà¥€ à¤•à¤°à¥‡à¤‚: <br><a href="${shareableLink}" target="_blank">${shareableLink}</a>`;
             linkOutput.style.display = 'block';
             
             document.getElementById('generateBtn').style.display = 'none'; // Hide the link button after generation
