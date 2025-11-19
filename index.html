@@ -112,7 +112,7 @@
             margin-right: 8px;
         }
 
-        /* Style for the initial 'Generate Link' button (or you can hide it completely) */
+        /* Style for the initial 'Generate Link' button */
         #generateBtn {
              background-color: #4CAF50; /* Green */
         }
@@ -123,7 +123,7 @@
         }
 
 
-        /* Style for the WhatsApp Share Button */
+        /* Style for the WhatsApp Share Button (Fallback/Post-generation) */
         #whatsappShareBtn {
             background-color: #25D366; /* WhatsApp Green */
             margin-top: 15px;
@@ -147,6 +147,18 @@
             display: none;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
+        
+        #userName {
+             padding: 12px;
+            margin-bottom: 15px;
+            width: 80%;
+            border: 2px solid #FFD700;
+            border-radius: 8px;
+            font-size: 1em;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
 
         /* Confetti canvas */
         #confetti-canvas {
@@ -174,7 +186,7 @@
             };
         </script>
         <script type="text/javascript" src="//www.highperformanceformat.com/a547b8ea37073e0fb7237dd13f83bf7c/invoke.js"></script>
-    </div>
+        </div>
     <div class="container">
         <h1 id="greetingText">Happy New Year 2026</h1>
         <div id="senderNameDisplay" class="sender-message" style="display:none;"></div>
@@ -183,14 +195,14 @@
 
         <div id="nameInputSection">
             <input type="text" id="userName" placeholder="यहाँ अपना नाम लिखें">
-            <button id="generateBtn" onclick="generateLink()" class="btn">लिंक बनाएँ</button>
+            <button id="generateBtn" onclick="generateLink()" class="btn">लिंक बनाएँ और शेयर करें</button>
         </div>
 
         <a id="whatsappShareBtn" href="#" target="_blank" class="btn">
-            <i class="fab fa-whatsapp"></i> लिंक WhatsApp पर शेयर करें
+            <i class="fab fa-whatsapp"></i> WhatsApp पर शेयर करें
         </a>
-
-        <div id="linkOutput" class="link-box"></div>
+        
+        <div id="linkOutput" class="link-box"></div> 
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -203,27 +215,32 @@
             const senderName = params.get('from');
             const senderNameDisplay = document.getElementById('senderNameDisplay');
             const greetingText = document.getElementById('greetingText');
+            const generateBtn = document.getElementById('generateBtn');
 
             if (senderName) {
                 // When someone clicks a shared link
                 const decodedSenderName = decodeURIComponent(senderName);
                 greetingText.innerHTML = `Happy New Year 2026!`;
-                senderNameDisplay.innerHTML = `From ${decodedSenderName}! 🎉`;
+                senderNameDisplay.innerHTML = `${decodedSenderName} की तरफ से! 🎉`; // Changed message for clarity
                 senderNameDisplay.style.display = 'block';
-                // Hide input field and show a friendly message instead
-                document.getElementById('nameInputSection').style.display = 'none';
                 
-                // Show a simple input for them to generate their own link
+                // Show input field for the recipient to generate their own link
                 document.getElementById('nameInputSection').style.display = 'block';
-                document.getElementById('userName').placeholder = 'अपना नाम लिखें और आगे शेयर करें';
+                document.getElementById('userName').placeholder = 'अपना नाम लिखें';
+                generateBtn.innerHTML = 'WhatsApp पर शेयर करें'; // Changed button text
                 
                 triggerConfetti(); 
             } else {
                 // When someone lands directly on the page
                 senderNameDisplay.style.display = 'none';
+                generateBtn.innerHTML = 'लिंक बनाएँ और शेयर करें';
                 triggerConfetti(); 
             }
         });
+        
+        // **********************************************
+        // ***** मुख्य बदलाव (Main Change) यहाँ है *****
+        // **********************************************
 
         function generateLink() {
             const userNameInput = document.getElementById('userName');
@@ -241,27 +258,35 @@
             const encodedName = encodeURIComponent(userName);
             shareableLink = `${baseUrl}?from=${encodedName}`;
 
-            // 2. Prepare WhatsApp Share
-            const message = encodeURIComponent(`आपको और आपके परिवार को Happy New Year 2026 की ढेर सारी शुभकामनाएँ! यह विशिंग कार्ड ${userName} की तरफ से आया है।
+            // 2. Prepare WhatsApp Share Message
+            // Hindi message is kept the same
+            const message = encodeURIComponent(`आपको और आपके परिवार को Happy New Year 2026 की ढेर सारी शुभकामनाएँ! यह विशिंग कार्ड *${userName}* की तरफ से आया है।
             \nआप भी अपना विशिंग कार्ड यहाँ से जनरेट करें: ${shareableLink}`);
             
-            // For Mobile (WhatsApp App)
+            // For Mobile (WhatsApp App) - This is the best method for auto-opening
             const whatsappUrl = `whatsapp://send?text=${message}`;
+
+
+            // 3. Update UI and Trigger Auto-Share
             
-            // For Desktop/Web (WhatsApp Web)
-            // const whatsappUrl = `https://api.whatsapp.com/send?text=${message}`;
-
-
-            // 3. Update UI
+            // Set the fallback button link
             whatsappBtn.href = whatsappUrl;
             whatsappBtn.style.display = 'inline-flex'; // Show the WhatsApp Button
-
-            linkOutput.innerHTML = `लिंक बन गया है, अब WhatsApp पर शेयर करें! या इसे कॉपी करें: <br><a href="${shareableLink}" target="_blank">${shareableLink}</a>`;
-            linkOutput.style.display = 'block';
             
             document.getElementById('generateBtn').style.display = 'none'; // Hide the link button after generation
+            
+            // Show a success message
+            linkOutput.innerHTML = `✅ **आपका लिंक बन गया है!** <br>हम आपको **सीधे WhatsApp** पर भेज रहे हैं। यदि WhatsApp न खुले, तो ऊपर दिए गए हरे बटन का उपयोग करें।
+            <br><a href="${shareableLink}" target="_blank" style="font-size:0.9em; color: #4CAF50;">(यहाँ आपका शेयर करने योग्य लिंक है)</a>`;
+            linkOutput.style.display = 'block';
 
-            // 4. Trigger Confetti
+            // 4. Auto-Redirect to WhatsApp (This executes the direct share flow)
+            // Use a small timeout to let the UI update first, before redirecting.
+            setTimeout(() => {
+                window.location.href = whatsappUrl;
+            }, 100); 
+
+            // 5. Trigger Confetti
             triggerConfetti(); 
             
             // Auto copy for convenience (optional)
