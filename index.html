@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* CSS Styling - (Most styles remain same for Celebration Theme) */
+        /* CSS Styling */
         body {
             font-family: 'Poppins', sans-serif;
             text-align: center;
@@ -23,17 +23,16 @@
             position: relative;
         }
 
-        /* --- Adsterra Container Style --- */
+        /* --- Adsterra Banner Container Style --- */
         #ad-container {
             width: 100%;
-            max-width: 468px; /* Ad width */
+            max-width: 468px;
             margin: 10px auto;
             text-align: center;
             background-color: rgba(0, 0, 0, 0.2);
             padding: 5px;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-            /* Important for z-index: Should be high, but below confetti canvas z-index 5, or similar to container */
             z-index: 10;
         }
         /* -------------------------------- */
@@ -105,7 +104,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            text-decoration: none; /* For the link share button */
+            text-decoration: none;
         }
         
         .btn i {
@@ -114,7 +113,7 @@
 
         /* Style for the initial 'Generate Link' button */
         #generateBtn {
-             background-color: #4CAF50; /* Green */
+             background-color: #4CAF50;
         }
         #generateBtn:hover {
             background-color: #45a049;
@@ -125,10 +124,10 @@
 
         /* Style for the WhatsApp Share Button (Fallback/Post-generation) */
         #whatsappShareBtn {
-            background-color: #25D366; /* WhatsApp Green */
+            background-color: #25D366;
             margin-top: 15px;
-            display: none; /* Initially hidden */
-            width: 100%; /* Full width for emphasis */
+            display: none;
+            width: 100%;
         }
         #whatsappShareBtn:hover {
             background-color: #1DA851;
@@ -158,7 +157,6 @@
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
             text-align: center;
         }
-
 
         /* Confetti canvas */
         #confetti-canvas {
@@ -208,7 +206,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <script>
-        let shareableLink = ''; // Global variable to store the generated link
+        let shareableLink = '';
 
         document.addEventListener('DOMContentLoaded', (event) => {
             const params = new URLSearchParams(window.location.search);
@@ -218,30 +216,23 @@
             const generateBtn = document.getElementById('generateBtn');
 
             if (senderName) {
-                // When someone clicks a shared link
                 const decodedSenderName = decodeURIComponent(senderName);
                 greetingText.innerHTML = `Happy New Year 2026!`;
-                senderNameDisplay.innerHTML = `${decodedSenderName} की तरफ से! 🎉`; // Changed message for clarity
+                senderNameDisplay.innerHTML = `${decodedSenderName} की तरफ से! 🎉`;
                 senderNameDisplay.style.display = 'block';
                 
-                // Show input field for the recipient to generate their own link
                 document.getElementById('nameInputSection').style.display = 'block';
                 document.getElementById('userName').placeholder = 'अपना नाम लिखें';
-                generateBtn.innerHTML = 'WhatsApp पर शेयर करें'; // Changed button text
+                generateBtn.innerHTML = 'WhatsApp पर शेयर करें';
                 
                 triggerConfetti(); 
             } else {
-                // When someone lands directly on the page
                 senderNameDisplay.style.display = 'none';
                 generateBtn.innerHTML = 'लिंक बनाएँ और शेयर करें';
                 triggerConfetti(); 
             }
         });
         
-        // **********************************************
-        // ***** मुख्य बदलाव (Main Change) यहाँ है *****
-        // **********************************************
-
         function generateLink() {
             const userNameInput = document.getElementById('userName');
             const userName = userNameInput.value.trim();
@@ -253,49 +244,35 @@
                 return;
             }
 
-            // 1. Generate Link
             const baseUrl = window.location.href.split('?')[0];
             const encodedName = encodeURIComponent(userName);
             shareableLink = `${baseUrl}?from=${encodedName}`;
 
-            // 2. Prepare WhatsApp Share Message
-            // Hindi message is kept the same
             const message = encodeURIComponent(`आपको और आपके परिवार को Happy New Year 2026 की ढेर सारी शुभकामनाएँ! यह विशिंग कार्ड *${userName}* की तरफ से आया है।
             \nआप भी अपना विशिंग कार्ड यहाँ से जनरेट करें: ${shareableLink}`);
             
-            // For Mobile (WhatsApp App) - This is the best method for auto-opening
             const whatsappUrl = `whatsapp://send?text=${message}`;
 
-
-            // 3. Update UI and Trigger Auto-Share
-            
-            // Set the fallback button link
             whatsappBtn.href = whatsappUrl;
-            whatsappBtn.style.display = 'inline-flex'; // Show the WhatsApp Button
+            whatsappBtn.style.display = 'inline-flex';
             
-            document.getElementById('generateBtn').style.display = 'none'; // Hide the link button after generation
+            document.getElementById('generateBtn').style.display = 'none';
             
-            // Show a success message
             linkOutput.innerHTML = `✅ **आपका लिंक बन गया है!** <br>हम आपको **सीधे WhatsApp** पर भेज रहे हैं। यदि WhatsApp न खुले, तो ऊपर दिए गए हरे बटन का उपयोग करें।
             <br><a href="${shareableLink}" target="_blank" style="font-size:0.9em; color: #4CAF50;">(यहाँ आपका शेयर करने योग्य लिंक है)</a>`;
             linkOutput.style.display = 'block';
 
-            // 4. Auto-Redirect to WhatsApp (This executes the direct share flow)
-            // Use a small timeout to let the UI update first, before redirecting.
             setTimeout(() => {
                 window.location.href = whatsappUrl;
             }, 100); 
 
-            // 5. Trigger Confetti
             triggerConfetti(); 
             
-            // Auto copy for convenience (optional)
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(shareableLink);
             }
         }
         
-        // ** Function to Trigger Confetti - 3x More Particles **
         function triggerConfetti() {
             const canvas = document.getElementById('confetti-canvas');
             const myConfetti = confetti.create(canvas, {
@@ -303,12 +280,10 @@
                 useWorker: true
             });
 
-            // Set 3x particle count (450 total initially)
             const particleCount = 450;
             const spread = 120;
             const colors = ['#FFD700', '#FF6F61', '#4CAF50', '#1E90FF', '#FFFFFF'];
 
-            // 1. Center Shot (Large)
             myConfetti({
                 particleCount: particleCount,
                 spread: spread,
@@ -316,17 +291,15 @@
                 colors: colors
             });
 
-            // 2. Left Side Shot (Large)
             setTimeout(() => {
                 myConfetti({
-                    particleCount: particleCount * 0.75, // Slightly less than max
+                    particleCount: particleCount * 0.75,
                     spread: spread + 10,
                     origin: { y: 0.5, x: 0.1 },
                     colors: colors
                 });
             }, 300); 
 
-            // 3. Right Side Shot (Large)
             setTimeout(() => {
                 myConfetti({
                     particleCount: particleCount * 0.75,
@@ -336,17 +309,18 @@
                 });
             }, 600); 
             
-            // 4. Final Scattered Burst (Small, for lingering effect)
             setTimeout(() => {
                 myConfetti({
                     particleCount: 150,
                     spread: 180,
-                    ticks: 200, // Make particles last longer
+                    ticks: 200,
                     origin: { y: 0.2 },
                     colors: colors
                 });
             }, 1000); 
         }
     </script>
-</body>
+
+    <script type='text/javascript' src='//pl28132801.effectivegatecpm.com/34/dd/2d/34dd2d1bbe16b318a8961a9b618216ac.js'></script>
+    </body>
 </html>
